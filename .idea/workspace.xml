@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63a4f30e-cdbf-4125-841f-3a9238ab3fb3" name="Changes" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/src/InvoiceDatabaseConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ExportReceiptsPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ImportReceiptsPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Invoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PartnerBalancePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ReceiptsByUsersPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TaxPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/postgresql_42_7_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/postgresql_42_7_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InvoiceDatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InvoiceDatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ReportingInvoicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ReportingInvoicePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SixButtonPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SixButtonPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/signUp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,17 +43,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Faculty/MyProjects/Fifth/AccountingProgramming/postgresql-42.7.3.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "E:/lib/junit-4.6.jar",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="AccountingProgramming" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -60,7 +84,14 @@
       <option name="project" value="LOCAL" />
       <updated>1715214915572</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Initial commit">
+      <created>1715227037172</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715227037172</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

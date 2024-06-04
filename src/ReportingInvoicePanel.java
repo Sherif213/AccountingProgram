@@ -1,4 +1,5 @@
 import javax.swing.*;
+import com.toedter.calendar.JDateChooser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,29 +10,32 @@ import java.util.regex.Pattern;
 
 public class ReportingInvoicePanel extends JPanel {
     private JTextField invoiceNumberField;
-    private JTextField invoiceDateField;
+    private JDateChooser invoiceDateChooser;
     private JTextField sellerNameField;
     private JTextField buyerNameField;
     private JTextField totalAmountField;
     private JTextField currencyField;
-    private JTextField paymentDueDateField;
+    private JDateChooser paymentDueDateChooser;
+    private JComboBox<String> transactionTypeComboBox; // Drop-down for export/import
+    private String loggedInUserDetails;
 
-    public ReportingInvoicePanel() {
+    public ReportingInvoicePanel(String loggedInUserDetails) {
+        this.loggedInUserDetails = loggedInUserDetails;
         initializeComponents();
     }
 
     private void initializeComponents() {
         setLayout(new BorderLayout());
 
-        JPanel inputPanel = new JPanel(new GridLayout(7, 2, 5, 5));
+        JPanel inputPanel = new JPanel(new GridLayout(8, 2, 5, 5)); // Updated grid layout for 8 rows
 
         inputPanel.add(createLabelWithPadding("Invoice Number:"));
         invoiceNumberField = new JTextField();
         inputPanel.add(invoiceNumberField);
 
-        inputPanel.add(createLabelWithPadding("Invoice Date (YYYY-MM-DD):"));
-        invoiceDateField = new JTextField();
-        inputPanel.add(invoiceDateField);
+        inputPanel.add(createLabelWithPadding("Invoice Date:"));
+        invoiceDateChooser = new JDateChooser();
+        inputPanel.add(invoiceDateChooser);
 
         inputPanel.add(createLabelWithPadding("Seller Name:"));
         sellerNameField = new JTextField();
@@ -49,9 +53,13 @@ public class ReportingInvoicePanel extends JPanel {
         currencyField = new JTextField();
         inputPanel.add(currencyField);
 
-        inputPanel.add(createLabelWithPadding("Payment Due Date (YYYY-MM-DD):"));
-        paymentDueDateField = new JTextField();
-        inputPanel.add(paymentDueDateField);
+        inputPanel.add(createLabelWithPadding("Payment Due Date:"));
+        paymentDueDateChooser = new JDateChooser();
+        inputPanel.add(paymentDueDateChooser);
+
+        inputPanel.add(createLabelWithPadding("Transaction Type:"));
+        transactionTypeComboBox = new JComboBox<>(new String[]{"Export", "Import"});
+        inputPanel.add(transactionTypeComboBox);
 
         add(inputPanel, BorderLayout.CENTER);
 
@@ -71,37 +79,24 @@ public class ReportingInvoicePanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             // Retrieve invoice details from input fields
             String invoiceNumber = invoiceNumberField.getText();
-            String invoiceDateStr = invoiceDateField.getText();
+            Date invoiceDate = new Date(invoiceDateChooser.getDate().getTime());
             String sellerName = sellerNameField.getText();
             String buyerName = buyerNameField.getText();
             double totalAmount = Double.parseDouble(totalAmountField.getText());
             String currency = currencyField.getText();
-            String paymentDueDateStr = paymentDueDateField.getText();
-
-            // Validate invoice date and payment due date formats using regex
-            if (!isValidDateFormat(invoiceDateStr) || !isValidDateFormat(paymentDueDateStr)) {
-                JOptionPane.showMessageDialog(ReportingInvoicePanel.this,
-                        "Invalid date format. Please enter dates in YYYY-MM-DD format.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Convert string dates to java.sql.Date
-            Date invoiceDate = Date.valueOf(invoiceDateStr);
-            Date paymentDueDate = Date.valueOf(paymentDueDateStr);
-
-            // Get the highest existing InvoiceID from the database and increment it by 1
+            Date paymentDueDate = new Date(paymentDueDateChooser.getDate().getTime());
+            String transactionType = (String) transactionTypeComboBox.getSelectedItem();
             int nextInvoiceID = getNextInvoiceID();
-
             // Insert invoice details into the database
             try {
                 InvoiceDatabaseConnection.insertInvoice("Invoices", nextInvoiceID, invoiceNumber, invoiceDate, sellerName,
-                        buyerName, totalAmount, currency, paymentDueDate);
+                        buyerName, totalAmount, currency, paymentDueDate, transactionType,loggedInUserDetails);
                 JOptionPane.showMessageDialog(ReportingInvoicePanel.this, "Invoice saved successfully.");
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(ReportingInvoicePanel.this,
                         "Error occurred while saving invoice: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         }
 
         // Method to get the next available InvoiceID by incrementing the highest existing ID

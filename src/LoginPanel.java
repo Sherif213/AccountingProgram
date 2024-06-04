@@ -12,12 +12,16 @@ public class LoginPanel extends JPanel {
     private JTextField pinField;
     private JButton loginButton;
     private JPanel parentPanel; // Reference to the parent panel where the LoginPanel is added
+    private String loggedInUserDetails;
 
     public LoginPanel(JPanel parentPanel) {
         this.parentPanel = parentPanel;
         initializeComponents();
     }
 
+    public String getLoggedInUserDetails() {
+        return loggedInUserDetails;
+    }
     private void initializeComponents() {
         setLayout(new BorderLayout());
 
@@ -52,17 +56,19 @@ public class LoginPanel extends JPanel {
     private class LoginButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
             String enteredPin = pinField.getText();
             String userDetails = userDetailsLabel.getText(); // Fetch userDetails from userDetailsLabel
-            // Check if the entered PIN matches the expected PIN (Dummy check for demonstration)
             if (verifyPin(userDetails, enteredPin)) { // Pass userDetails and enteredPin to verifyPin method
-                // Clear the PIN field
+
+                loggedInUserDetails = userDetails;
                 pinField.setText("");
                 // Show the panel with six buttons upon successful login
                 parentPanel.removeAll();
-                parentPanel.add(new SixButtonPanel(parentPanel));
+                parentPanel.add(new SixButtonPanel(parentPanel,loggedInUserDetails));
                 parentPanel.revalidate();
                 parentPanel.repaint();
+
             } else {
                 JOptionPane.showMessageDialog(LoginPanel.this, "Invalid PIN. Please try again.", "Login Failed", JOptionPane.ERROR_MESSAGE);
                 // Clear the PIN field

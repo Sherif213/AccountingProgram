@@ -123,20 +123,36 @@ public class signUp extends JPanel {
             // Generate ID (increment by 1 from the last ID in the database)
             int id = generateId(connection);
 
-            // Insert user data into the database
-            String insertQuery = "INSERT INTO users (userId, FirstName, LastName, email, sharePercent, password, profilePin) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, firstName);
-            preparedStatement.setString(3, lastName);
-            preparedStatement.setString(4, email);
-            preparedStatement.setDouble(5, sharePercent);
-            preparedStatement.setString(6, password);
-            preparedStatement.setInt(7, profilePin);
-            preparedStatement.executeUpdate();
+            // Calculate total share percentage
+            double totalSharePercent = getTotalSharePercentage(connection);
+            double newSharePercent = sharePercent;
+            if (totalSharePercent + sharePercent > 100) {
+                newSharePercent = 0;
+                JOptionPane.showMessageDialog(this, "Total share percentage exceeds 100%. User will get 0% share but will receive a 1% profit return.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
 
-            // Close resources
-            preparedStatement.close();
+            // Insert user data into the users table
+            String insertUserQuery = "INSERT INTO users (userId, FirstName, LastName, email, sharePercent, password, profilePin) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement userPreparedStatement = connection.prepareStatement(insertUserQuery);
+            userPreparedStatement.setInt(1, id);
+            userPreparedStatement.setString(2, firstName);
+            userPreparedStatement.setString(3, lastName);
+            userPreparedStatement.setString(4, email);
+            userPreparedStatement.setDouble(5, newSharePercent);
+            userPreparedStatement.setString(6, password);
+            userPreparedStatement.setInt(7, profilePin);
+            userPreparedStatement.executeUpdate();
+            userPreparedStatement.close();
+
+            // Insert data into the PartnerBalances table
+            String insertBalanceQuery = "INSERT INTO PartnerBalances (UserDetails, Balance, SharePercentage) VALUES (?, ?, ?)";
+            PreparedStatement balancePreparedStatement = connection.prepareStatement(insertBalanceQuery);
+            balancePreparedStatement.setString(1, email); // Assuming email is unique and used as UserDetails
+            balancePreparedStatement.setDouble(2, 0.0); // Initial balance is 0
+            balancePreparedStatement.setDouble(3, newSharePercent);
+            balancePreparedStatement.executeUpdate();
+            balancePreparedStatement.close();
+
             connection.close();
 
             // Show success message
@@ -163,5 +179,17 @@ public class signUp extends JPanel {
         resultSet.close();
         statement.close();
         return id;
+    }
+
+    private double getTotalSharePercentage(Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT SUM(sharePercent) FROM users");
+        double totalSharePercent = 0;
+        if (resultSet.next()) {
+            totalSharePercent = resultSet.getDouble(1);
+        }
+        resultSet.close();
+        statement.close();
+        return totalSharePercent;
     }
 }
