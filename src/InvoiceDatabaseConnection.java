@@ -211,4 +211,22 @@ public class InvoiceDatabaseConnection {
         }
         return balances;
     }
+    public static List<Flat> getAllFlats() throws SQLException {
+        List<Flat> flats = new ArrayList<>();
+        String query = "SELECT name, price, size FROM Flats";
+
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                int size = resultSet.getInt("size");
+
+                flats.add(new Flat(name, price, size));
+            }
+        }
+        return flats;
+    }
 }

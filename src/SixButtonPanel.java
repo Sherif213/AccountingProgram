@@ -78,6 +78,12 @@ public class SixButtonPanel extends JPanel {
                     parentPanel.revalidate();
                     parentPanel.repaint();
                     break;
+                case "Products":
+                    parentPanel.removeAll();
+                    parentPanel.add(new ProductsPanel(loggedInUserDetails));
+                    parentPanel.revalidate();
+                    parentPanel.repaint();
+                    break;
 
                 default:
                     System.out.println("Button clicked: " + buttonText);
