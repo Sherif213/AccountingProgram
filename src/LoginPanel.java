@@ -11,7 +11,7 @@ public class LoginPanel extends JPanel {
     private JLabel userDetailsLabel;
     private JTextField pinField;
     private JButton loginButton;
-    private JPanel parentPanel; // Reference to the parent panel where the LoginPanel is added
+    private JPanel parentPanel;
     private String loggedInUserDetails;
 
     public LoginPanel(JPanel parentPanel) {
@@ -44,12 +44,29 @@ public class LoginPanel extends JPanel {
 
     public boolean verifyPin(String userDetails, String pin) {
         try {
-            // Assume the verification logic here
-            return true; // Dummy verification for demonstration
-        } catch (Exception e) {
+            // Establish a database connection
+            Connection connection = InvoiceDatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+
+            // Query to check if the user details and PIN match
+            String query = "SELECT * FROM users WHERE firstname = '" + userDetails + "' AND profilepin = '" + pin + "'";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // If the result set has any rows, it means the user exists and the PIN is correct
+            if (resultSet.next()) {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                return true;
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false; // Error occurred or user not found
+        return false;
     }
 
     // Inner class to handle login button click
@@ -71,7 +88,7 @@ public class LoginPanel extends JPanel {
 
             } else {
                 JOptionPane.showMessageDialog(LoginPanel.this, "Invalid PIN. Please try again.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-                // Clear the PIN field
+
                 pinField.setText("");
             }
         }

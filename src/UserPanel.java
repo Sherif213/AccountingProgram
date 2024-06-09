@@ -39,22 +39,22 @@ public class UserPanel extends JPanel {
         JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton addUserButton = new JButton("+");
         addUserButton.setFont(new Font("Arial", Font.BOLD, 24));
-        addUserButton.setPreferredSize(new Dimension(50, 50)); // Set button size
-        addUserButton.addActionListener(e -> cardLayout.show(cardPanel, "Signup")); // Show signup panel
+        addUserButton.setPreferredSize(new Dimension(50, 50));
+        addUserButton.addActionListener(e -> cardLayout.show(cardPanel, "Signup"));
         addPanel.add(addUserButton);
         add(addPanel, BorderLayout.SOUTH);
     }
 
 
     private JPanel createUserProfilePanel() {
-        JPanel userProfilePanel = new JPanel(new GridLayout(2, 3, 10, 10)); // 2 rows, 3 columns, with 10px horizontal and vertical gap
-        userProfilePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Add padding
+        JPanel userProfilePanel = new JPanel(new GridLayout(2, 3, 10, 10));
+        userProfilePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Display user profiles from the fetched user data
         for (String userData : usersData) {
             JLabel userProfile = new JLabel(userData, SwingConstants.CENTER);
             userProfile.setFont(new Font("Arial", Font.PLAIN, 16));
-            userProfile.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visualization
+            userProfile.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
             // Add mouse listener to the user profile label
             userProfile.addMouseListener(new UserProfileClickListener(userData));
@@ -71,20 +71,20 @@ public class UserPanel extends JPanel {
             databaseConnection dbConnection = new databaseConnection();
             Connection connection = dbConnection.connection();
 
-            // Create a statement
+
             Statement statement = connection.createStatement();
 
-            // Execute a query to fetch user data
+            //fetch user data
             ResultSet resultSet = statement.executeQuery("SELECT firstname FROM users");
 
-            // Process the results and add user data to the list
+            // Process the results
             while (resultSet.next()) {
-                // Assuming the "users" table has a column named "firstname"
+
                 String firstName = resultSet.getString("firstname");
                 userDataList.add(firstName);
             }
 
-            // Close the resources
+
             resultSet.close();
             statement.close();
             connection.close();
@@ -98,9 +98,9 @@ public class UserPanel extends JPanel {
         usersData = fetchUsersDataFromDatabase();
         userProfilePanel = createUserProfilePanel();
         cardPanel.add(userProfilePanel, "UserProfiles");
-        cardLayout.show(cardPanel, "UserProfiles"); // Show the user profiles panel
-        revalidate(); // Refresh the layout
-        repaint(); // Redraw the panel
+        cardLayout.show(cardPanel, "UserProfiles");
+        revalidate();
+        repaint();
     }
 
     // Inner class to handle user profile click events

@@ -7,6 +7,13 @@
       <root url="jar://E:/lib/jgoodies-common-1.2.0.jar!/" />
       <root url="jar://E:/lib/jgoodies-looks-2.4.1.jar!/" />
       <root url="jar://E:/lib/junit-4.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../jbcrypt-0.4.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Desktop/commons-io-2.11.0.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Desktop/poi-ooxml-5.0.0.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Desktop/commons-collections4-4.4.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Desktop/poi-5.0.0.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Desktop/poi-ooxml-schemas-4.1.2.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Desktop/xmlbeans-3.1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

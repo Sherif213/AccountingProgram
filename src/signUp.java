@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class signUp extends JPanel {
     private JTextField firstNameField;
     private JTextField lastNameField;
@@ -79,7 +81,7 @@ public class signUp extends JPanel {
         gbc.weightx = 0.0;
         JButton signupButton = new JButton("Signup");
         signupButton.setForeground(Color.WHITE);
-        signupButton.setBackground(new Color(53, 152, 219)); // Blue background color
+        signupButton.setBackground(new Color(53, 152, 219));
         signupButton.setMargin(new Insets(10, 20, 10, 20));
         signupButton.addActionListener(new ActionListener() {
             @Override
@@ -116,11 +118,13 @@ public class signUp extends JPanel {
                 return;
             }
 
+            // Hash the password
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
             // Establish database connection
             databaseConnection dbConnection = new databaseConnection();
             Connection connection = dbConnection.connection();
 
-            // Generate ID (increment by 1 from the last ID in the database)
             int id = generateId(connection);
 
             // Calculate total share percentage
@@ -139,7 +143,7 @@ public class signUp extends JPanel {
             userPreparedStatement.setString(3, lastName);
             userPreparedStatement.setString(4, email);
             userPreparedStatement.setDouble(5, newSharePercent);
-            userPreparedStatement.setString(6, password);
+            userPreparedStatement.setString(6, hashedPassword); // Store hashed password
             userPreparedStatement.setInt(7, profilePin);
             userPreparedStatement.executeUpdate();
             userPreparedStatement.close();
@@ -155,7 +159,7 @@ public class signUp extends JPanel {
 
             connection.close();
 
-            // Show success message
+
             JOptionPane.showMessageDialog(this, "User signed up successfully!");
 
             // Switch back to user profiles panel
@@ -172,9 +176,9 @@ public class signUp extends JPanel {
     private int generateId(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT MAX(userId) FROM users");
-        int id = 1; // Default to 1 if no records exist
+        int id = 1;
         if (resultSet.next()) {
-            id = resultSet.getInt(1) + 1; // Increment by 1 from the last ID
+            id = resultSet.getInt(1) + 1;
         }
         resultSet.close();
         statement.close();

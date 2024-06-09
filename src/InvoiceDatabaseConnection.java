@@ -211,9 +211,11 @@ public class InvoiceDatabaseConnection {
         }
         return balances;
     }
+
+    // New method to retrieve all flats including images
     public static List<Flat> getAllFlats() throws SQLException {
         List<Flat> flats = new ArrayList<>();
-        String query = "SELECT name, price, size FROM Flats";
+        String query = "SELECT name, price, size, image FROM Flats";
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
@@ -223,10 +225,27 @@ public class InvoiceDatabaseConnection {
                 String name = resultSet.getString("name");
                 double price = resultSet.getDouble("price");
                 int size = resultSet.getInt("size");
+                byte[] image = resultSet.getBytes("image");
 
-                flats.add(new Flat(name, price, size));
+                flats.add(new Flat(name, price, size, image));
             }
         }
         return flats;
+    }
+
+    // New method to insert a flat including image
+    public static void insertFlat(String name, double price, int size, byte[] image) throws SQLException {
+        String query = "INSERT INTO Flats (name, price, size, image) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, name);
+            preparedStatement.setDouble(2, price);
+            preparedStatement.setInt(3, size);
+            preparedStatement.setBytes(4, image);
+
+            preparedStatement.executeUpdate();
+        }
     }
 }

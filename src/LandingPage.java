@@ -27,20 +27,20 @@ public class LandingPage extends JFrame implements ActionListener {
 
         JButton userBtn = new JButton("Proceed as User");
         userBtn.addActionListener(this);
-        userBtn.setPreferredSize(new Dimension(200, 150)); // Set preferred size for user button
-        userBtn.setBackground(new Color(102, 153, 204)); // Set background color to a professional blue
-        userBtn.setForeground(Color.WHITE); // Set text color to white
-        buttonPanel.add(userBtn, gbc); // Add user button to the panel
+        userBtn.setPreferredSize(new Dimension(200, 150));
+        userBtn.setBackground(new Color(102, 153, 204));
+        userBtn.setForeground(Color.WHITE);
+        buttonPanel.add(userBtn, gbc);
 
         gbc.gridx = 1; // Move to the next column
         JButton adminBtn = new JButton("Proceed as Admin");
         adminBtn.addActionListener(this);
-        adminBtn.setPreferredSize(new Dimension(200, 150)); // Set preferred size for admin button
-        adminBtn.setBackground(new Color(255, 153, 51)); // Set background color to a professional orange
-        adminBtn.setForeground(Color.WHITE); // Set text color to white
-        buttonPanel.add(adminBtn, gbc); // Add admin button to the panel
+        adminBtn.setPreferredSize(new Dimension(200, 150));
+        adminBtn.setBackground(new Color(255, 153, 51));
+        adminBtn.setForeground(Color.WHITE);
+        buttonPanel.add(adminBtn, gbc);
 
-        add(buttonPanel, BorderLayout.CENTER); // Add button panel to the center
+        add(buttonPanel, BorderLayout.CENTER);
     }
 
     private GridBagConstraints createGridBagConstraints(int gridx, int gridy, int gridwidth, int gridheight, int anchor, int fill, Insets insets) {
@@ -58,17 +58,17 @@ public class LandingPage extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Proceed as User")) {
-            replaceContent(new UserPanel()); // Replace the content with the UserPanel
+            replaceContent(new UserPanel());
         } else if (e.getActionCommand().equals("Proceed as Admin")) {
-            // Implement action for admin button if needed
+            replaceContent(new AdminPanel());
         }
     }
 
     private void replaceContent(JPanel newContent) {
-        getContentPane().removeAll(); // Remove all components from the content pane
-        getContentPane().add(newContent, BorderLayout.CENTER); // Add the new content to the content pane
-        revalidate(); // Revalidate the frame to update the layout
-        repaint(); // Repaint the frame to update the appearance
+        getContentPane().removeAll();
+        getContentPane().add(newContent, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     public static void main(String[] args) {

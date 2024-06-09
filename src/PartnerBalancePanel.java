@@ -100,7 +100,7 @@ public class PartnerBalancePanel extends JPanel {
                     double newBalance = Double.parseDouble(balanceField.getText());
                     double newSharePercentage = Double.parseDouble(sharePercentageField.getText());
 
-                    // Get the total share percentage of all users
+
                     double totalSharePercentage = getTotalSharePercentage();
 
                     // Calculate the new total share percentage after updating

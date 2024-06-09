@@ -16,7 +16,7 @@ public class ReportingInvoicePanel extends JPanel {
     private JTextField totalAmountField;
     private JTextField currencyField;
     private JDateChooser paymentDueDateChooser;
-    private JComboBox<String> transactionTypeComboBox; // Drop-down for export/import
+    private JComboBox<String> transactionTypeComboBox;
     private String loggedInUserDetails;
 
     public ReportingInvoicePanel(String loggedInUserDetails) {
@@ -27,7 +27,7 @@ public class ReportingInvoicePanel extends JPanel {
     private void initializeComponents() {
         setLayout(new BorderLayout());
 
-        JPanel inputPanel = new JPanel(new GridLayout(8, 2, 5, 5)); // Updated grid layout for 8 rows
+        JPanel inputPanel = new JPanel(new GridLayout(8, 2, 5, 5));
 
         inputPanel.add(createLabelWithPadding("Invoice Number:"));
         invoiceNumberField = new JTextField();
